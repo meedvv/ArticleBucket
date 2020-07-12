@@ -30,6 +30,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -58,11 +62,19 @@
 			</exclusions>
 		</dependency>
 
+<!--		<dependency>-->
+<!--			<groupId>org.hibernate</groupId>-->
+<!--			<artifactId>hibernate-validator</artifactId>-->
+<!--			<version>${hibernate-validator.version}</version>-->
+<!--		</dependency>-->
+
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>${hibernate-validator.version}</version>
+			<groupId>org.eclipse.tycho</groupId>
+			<artifactId>org.eclipse.osgi</artifactId>
+			<version>3.13.0.v20180226-1711</version>
 		</dependency>
+		<!-- Thanks for using https://jar-download.com -->
+
 
 		<dependency>
 			<groupId>io.springfox</groupId>

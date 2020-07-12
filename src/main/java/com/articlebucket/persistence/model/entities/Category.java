@@ -2,7 +2,6 @@ package com.articlebucket.persistence.model.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
@@ -25,11 +26,14 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name", nullable = false, unique = true)
-    @Length(min = 4, max = 20)
+    @Size(min = 2, max = 14)
     private String name;
 
-    @Column(name = "creation_date")
+    @NotEmpty
+    private String test;
+
+
+    @Column(name = "creation_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 

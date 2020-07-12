@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.ACCEPTED;
@@ -37,7 +38,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> create(@RequestBody final Category category) {
+    public ResponseEntity<Category> create(@Valid  @RequestBody final Category category) {
         return ResponseEntity.status(CREATED).body(categoryService.create(category));
     }
 
