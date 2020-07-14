@@ -1,5 +1,6 @@
 package com.articlebucket.persistence.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -26,13 +27,12 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 2, max = 14)
+    @NotNull(message = "{category.name.required}")
+    @Size(min = 5, max = 20, message = "{category.name.length}")
+    @Column(unique = true, nullable = false, length = 20)
     private String name;
 
-    @NotEmpty
-    private String test;
-
-
+    @JsonProperty(value = "created_at")
     @Column(name = "creation_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;

@@ -38,11 +38,11 @@ public class ArticleServiceImpl implements ArticleService {
         final Category category = categoryService.findOneByName(articleDto.getCategoryName());
 
         final Article article = new Article();
-        article.setText(articleDto.getText());
+        article.setContent(articleDto.getContent());
         article.setCategory(category);
         article.setCreationDate(articleDto.getCreationDate());
-        article.setDescription(articleDto.getDescription());
         article.setTitle(articleDto.getTitle());
+        article.setLogo(articleDto.getLogo());
 
         return articleRepository.save(article);
     }

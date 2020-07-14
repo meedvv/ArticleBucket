@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -27,15 +26,17 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(nullable = false, length = 255)
     private String title;
 
-    private String description;
+    @Column(nullable = false, length = 255)
+    private String logo;
 
-    private String text;
+    @Column(nullable = false, columnDefinition="TEXT", length = 1024)
+    private String content;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(nullable = false, name = "category_id")
     private Category category;
 
     @Column(name = "creation_date")

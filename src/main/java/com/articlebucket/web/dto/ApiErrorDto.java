@@ -1,17 +1,16 @@
 package com.articlebucket.web.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
+import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
 
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorResponseDto {
+public class ApiErrorDto {
 
     private String error;
 
