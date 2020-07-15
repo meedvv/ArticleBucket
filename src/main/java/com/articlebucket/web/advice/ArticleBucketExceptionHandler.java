@@ -1,5 +1,7 @@
 package com.articlebucket.web.advice;
 
+import com.articlebucket.persistence.model.exceptions.ArticleNotFoundException;
+import com.articlebucket.persistence.model.exceptions.CategoryNotFoundException;
 import com.articlebucket.web.dto.ApiErrorDto;
 import com.articlebucket.web.dto.ApiValidationErrorDto;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @ControllerAdvice
 @RequiredArgsConstructor
@@ -27,6 +30,15 @@ public class ArticleBucketExceptionHandler {
                 .error(ex.getClass().getSimpleName())
                 .build()
                 .addSubErrors(ex.getBindingResult().getFieldErrors()));
+    }
+
+    @ExceptionHandler({ArticleNotFoundException.class, CategoryNotFoundException.class})
+    public ResponseEntity<Object> handleResourceNotFoundException(final RuntimeException ex) {
+        return buildResponseEntity(ApiErrorDto.builder()
+                .errorCode(NOT_FOUND)
+                .message(ex.getMessage())
+                .error(ex.getClass().getSimpleName())
+                .build());
     }
 
     @ExceptionHandler(Throwable.class)

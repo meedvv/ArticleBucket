@@ -1,6 +1,7 @@
 package com.articlebucket.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Value;
 
 import javax.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Value
+@Builder
 public class ArticleDto {
 
     private final Long id;

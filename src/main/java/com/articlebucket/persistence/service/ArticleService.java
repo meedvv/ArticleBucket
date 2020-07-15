@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface ArticleService {
 
-    List<Article> findAll();
+    List<ArticleDto> findAll();
 
-    Article findOneById(Long articleId);
+    ArticleDto findOneById(Long articleId);
 
-    Article create(ArticleDto articleDto);
+    ArticleDto create(ArticleDto articleDto);
 
     void delete(Long articleId);
 

@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,33 +25,51 @@ public class ArticleServiceImpl implements ArticleService {
     private final CategoryService categoryService;
 
     @Override
-    public List<Article> findAll() {
-        return articleRepository.findAll();
+    public List<ArticleDto> findAll() {
+
+        return articleRepository.findAll().stream().map(this::getArticleDtoFrom).collect(Collectors.toList());
     }
 
     @Override
-    public Article findOneById(final Long articleId) {
-        return articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException());
+    public ArticleDto findOneById(final Long articleId) {
+        final Article article = articleRepository.findById(articleId)
+                                                    .orElseThrow(ArticleNotFoundException::new);
+        return this.getArticleDtoFrom(article);
     }
 
     @Override
-    public Article create(final ArticleDto articleDto) {
+    public ArticleDto create(final ArticleDto articleDto) {
+        final Article article = articleRepository.save(this.getArticleFrom(articleDto));
+        return this.getArticleDtoFrom(article);
+    }
 
+    @Override
+    public void delete(Long articleId) {
+        articleRepository.deleteById(articleId);
+    }
+
+    private ArticleDto getArticleDtoFrom(final Article article) {
+        return ArticleDto.builder()
+                .id(article.getId())
+                .title(article.getTitle())
+                .content(article.getContent())
+                .categoryName(article.getCategory().getName())
+                .creationDate(article.getCreationDate())
+                .logo(article.getLogo())
+                .build();
+    }
+
+    private Article getArticleFrom(final ArticleDto articleDto) {
         final Category category = categoryService.findOneByName(articleDto.getCategoryName());
-
         final Article article = new Article();
+
         article.setContent(articleDto.getContent());
         article.setCategory(category);
         article.setCreationDate(articleDto.getCreationDate());
         article.setTitle(articleDto.getTitle());
         article.setLogo(articleDto.getLogo());
 
-        return articleRepository.save(article);
-    }
-
-    @Override
-    public void delete(Long articleId) {
-        articleRepository.deleteById(articleId);
+        return article;
     }
 
 }

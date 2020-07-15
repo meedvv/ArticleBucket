@@ -28,17 +28,17 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping
-    public ResponseEntity<List<Article>> getAll() {
+    public ResponseEntity<List<ArticleDto>> getAll() {
         return ResponseEntity.status(OK).body(articleService.findAll());
     }
 
     @GetMapping("/{articleId}")
-    public ResponseEntity<Article> getOneById(@PathVariable final Long articleId) {
+    public ResponseEntity<ArticleDto> getOneById(@PathVariable final Long articleId) {
         return ResponseEntity.status(OK).body(articleService.findOneById(articleId));
     }
 
     @PostMapping
-    public ResponseEntity<Article> create(@Valid @RequestBody final ArticleDto articleDto) {
+    public ResponseEntity<ArticleDto> create(@Valid @RequestBody final ArticleDto articleDto) {
         return ResponseEntity.status(CREATED).body(articleService.create(articleDto));
     }
 
