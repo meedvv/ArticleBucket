@@ -24,12 +24,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findOneById(final Long categoryId) {
-        return categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException());
+        return categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException("Category With Id: " + categoryId + " Not Found."));
     }
 
     @Override
     public Category findOneByName(String name) {
-        return categoryRepository.findByNameIgnoreCase(name).orElseThrow(() -> new CategoryNotFoundException());
+        return categoryRepository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new CategoryNotFoundException("Category With Name: " + name + " Not Found."));
     }
 
     @Override

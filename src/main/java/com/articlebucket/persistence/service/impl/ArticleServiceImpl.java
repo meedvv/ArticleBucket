@@ -8,6 +8,7 @@ import com.articlebucket.persistence.service.ArticleService;
 import com.articlebucket.persistence.service.CategoryService;
 import com.articlebucket.web.dto.ArticleDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final CategoryService categoryService;
 
+    private final MessageSource messageSource;
+
     @Override
     public List<ArticleDto> findAll() {
 
@@ -33,7 +36,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDto findOneById(final Long articleId) {
         final Article article = articleRepository.findById(articleId)
-                                                    .orElseThrow(ArticleNotFoundException::new);
+                .orElseThrow(() -> new ArticleNotFoundException("Article With Id: " + articleId + " Not Found."));
         return this.getArticleDtoFrom(article);
     }
 
